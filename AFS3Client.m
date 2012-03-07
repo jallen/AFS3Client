@@ -50,9 +50,21 @@ NSString *const AFIS3AccessPolicyBucketOwnerFullControl = @"bucket-owner-full-co
 	return self;
 }
 
+- (id)initWithAccessKey:(NSString *)accessKey secretAccessKey:(NSString *)secretKey sessionToken:(NSString *)sessionToken {
+	if (!(self = [super initWithBaseURL:[NSURL URLWithString:@"https://s3.amazonaws.com"]])) return nil;
+	
+	_accessKey = [accessKey copy];
+	_secretAccessKey = [secretKey copy];
+	_sessionToken = [sessionToken copy];
+	
+	return self;
+}
+
 - (void)dealloc {
 	[_accessKey release];
 	[_secretAccessKey release];
+	[_sessionToken release];
+	[_accessPolicy release];
 	[super dealloc];
 }
 
@@ -111,11 +123,10 @@ NSString *const AFIS3AccessPolicyBucketOwnerFullControl = @"bucket-owner-full-co
 	NSMutableDictionary *amzHeaders = [self S3Headers];
 	
 	NSString *canonicalizedAmzHeaders = @"";
-	for (NSString *header in [amzHeaders keysSortedByValueUsingSelector:@selector(compare:)]) {
+	for (NSString *header in [[amzHeaders allKeys] sortedArrayUsingSelector:@selector(compare:)]) {
 		canonicalizedAmzHeaders = [NSString stringWithFormat:@"%@%@:%@\n",canonicalizedAmzHeaders,[header lowercaseString],[amzHeaders objectForKey:header]];
 		[self setDefaultHeader:header value:[amzHeaders objectForKey:header]];
 	}
-	
 	// Put it all together
 	NSString *stringToSign = [NSString stringWithFormat:@"%@\n\n\n%@\n%@%@", @"PUT", dateString, canonicalizedAmzHeaders, canonicalizedResource];
 	NSString *signature = [AFS3Client base64forData:[AFS3Client HMACSHA1withKey:_secretAccessKey forString:stringToSign]];
@@ -126,8 +137,11 @@ NSString *const AFIS3AccessPolicyBucketOwnerFullControl = @"bucket-owner-full-co
 	 
 - (NSMutableDictionary *)S3Headers {
 	NSMutableDictionary *headers = [NSMutableDictionary dictionary];
-	if ([self accessPolicy]) {
-		[headers setObject:[self accessPolicy] forKey:@"x-amz-acl"];
+	if (_accessPolicy) {
+		[headers setObject:_accessPolicy forKey:@"x-amz-acl"];
+	}
+	if (_sessionToken) {
+		[headers setObject:_sessionToken forKey:@"x-amz-security-token"];
 	}
 	return headers;
 }

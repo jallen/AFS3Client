@@ -39,6 +39,7 @@ extern NSString *const AFIS3AccessPolicyBucketOwnerFullControl;
 @interface AFS3Client : AFHTTPClient {
 	NSString *_accessKey;
 	NSString *_secretAccessKey;
+	NSString *_sessionToken;
 	// The access policy to use when PUTting a file (see the string constants at the top AFS3Client.h for details on what the possible options are)
 	NSString *_accessPolicy;
 }
@@ -50,13 +51,33 @@ extern NSString *const AFIS3AccessPolicyBucketOwnerFullControl;
  
  @param accessKey Your S3 access key.
  @param secretKey Your S3 secret key.
+ @param sessionToken Your S3 session token
+ 
+ @discussion This is the initializes an AFS3Client with baseURL of 'https://s3.amazonaws.com'. This method is meant to be used with
+ temporary security creditials from http://aws.amazon.com/iam/.
+ 
+ @return The newly-initialized HTTP client
+ */
+
+- (id)initWithAccessKey:(NSString *)accessKey 
+				secretAccessKey:(NSString *)secretKey 
+					 sessionToken:(NSString *)sessionToken;
+
+/**
+ Initializes an `AFS3Client` object with the specified base URL. 
+ 
+ @param accessKey Your S3 access key.
+ @param secretKey Your S3 secret key.
+ 
+ @WARNING!!! This should be used for tesing purposes only. Consider using initWithAccesToken:secretAccessKey:sessionToken along with
+ temporary security credentials with http://aws.amazon.com/iam/. That way you don't have to store your root aws credentials in the app.
  
  @discussion This is the initializes an AFS3Client with baseURL of 'https://s3.amazonaws.com'.
  
  @return The newly-initialized HTTP client
  */
 - (id)initWithAccessKey:(NSString *)accessKey 
-						secretAccessKey:(NSString *)secretKey; 
+				secretAccessKey:(NSString *)secretKey; 
 
 /**
  PUT a new S3 object with the specified bucket and key
