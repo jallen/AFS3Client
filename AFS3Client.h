@@ -11,10 +11,10 @@
 // to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 // copies of the Software, and to permit persons to whom the Software is
 // furnished to do so, subject to the following conditions:
-// 
+//
 // The above copyright notice and this permission notice shall be included in
 // all copies or substantial portions of the Software.
-// 
+//
 // THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 // IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 // FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -47,7 +47,7 @@ extern NSString *const AFIS3AccessPolicyBucketOwnerFullControl;
 @property (nonatomic, retain) NSString *accessPolicy;
 
 /**
- Initializes an `AFS3Client` object with the specified base URL. 
+ Initializes an `AFS3Client` object with the specified base URL.
  
  @param accessKey Your S3 access key.
  @param secretKey Your S3 secret key.
@@ -59,12 +59,12 @@ extern NSString *const AFIS3AccessPolicyBucketOwnerFullControl;
  @return The newly-initialized HTTP client
  */
 
-- (id)initWithAccessKey:(NSString *)accessKey 
-				secretAccessKey:(NSString *)secretKey 
-					 sessionToken:(NSString *)sessionToken;
+- (id)initWithAccessKey:(NSString *)accessKey
+        secretAccessKey:(NSString *)secretKey
+           sessionToken:(NSString *)sessionToken;
 
 /**
- Initializes an `AFS3Client` object with the specified base URL. 
+ Initializes an `AFS3Client` object with the specified base URL.
  
  @param accessKey Your S3 access key.
  @param secretKey Your S3 secret key.
@@ -76,8 +76,8 @@ extern NSString *const AFIS3AccessPolicyBucketOwnerFullControl;
  
  @return The newly-initialized HTTP client
  */
-- (id)initWithAccessKey:(NSString *)accessKey 
-				secretAccessKey:(NSString *)secretKey; 
+- (id)initWithAccessKey:(NSString *)accessKey
+        secretAccessKey:(NSString *)secretKey;
 
 /**
  PUT a new S3 object with the specified bucket and key
@@ -86,22 +86,22 @@ extern NSString *const AFIS3AccessPolicyBucketOwnerFullControl;
  @param key Path to new object ex. '/path/to/your/object.jpg'
  
  */
-- (void)putObjectForData:(NSData *)data 
-							withBucket:(NSString *)bucket 
-										 key:(NSString *)key
-								 success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
-								 failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
+- (void)putObjectForData:(NSData *)data
+              withBucket:(NSString *)bucket
+                     key:(NSString *)key
+                 success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
+                 failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
 
 /**
  Overrides AFHTTPClient putPath function so we can post the data in the body of the request without using parameters
  
- @param path The path to be appended to the HTTP client's base URL and used as the request URL. 
+ @param path The path to be appended to the HTTP client's base URL and used as the request URL.
  @param data Data for the object.
  @param success A block object to be executed when the request operation finishes successfully. This block has no return value and takes two arguments: the created request operation and the object created from the response data of request.
  @param failure A block object to be executed when the request operation finishes unsuccessfully, or that finishes successfully, but encountered an error while parsing the resonse data. This block has no return value and takes two arguments:, the created request operation and the `NSError` object describing the network or parsing error that occurred.
  
  */
-- (void)putPath:(NSString *)path 
+- (void)putPath:(NSString *)path
            data:(NSData *)data
         success:(void (^)(AFHTTPRequestOperation *operation, id responseObject))success
         failure:(void (^)(AFHTTPRequestOperation *operation, NSError *error))failure;
@@ -115,11 +115,11 @@ extern NSString *const AFIS3AccessPolicyBucketOwnerFullControl;
  @param path The path to be appended to the HTTP client's base URL and used as the request URL.
  @param data The data to be sent in the body of the HTTP Request.
  
- @return An `NSMutableURLRequest` object 
+ @return An `NSMutableURLRequest` object
  */
-- (NSMutableURLRequest *)requestWithMethod:(NSString *)method 
-																			path:(NSString *)path 
-																			data:(NSData *)data;
+- (NSMutableURLRequest *)requestWithMethod:(NSString *)method
+                                      path:(NSString *)path
+                                      data:(NSData *)data;
 
 
 /**
