@@ -1,4 +1,4 @@
-# AFOS3Client
+# AFS3Client
 
 AFS3Client is an extension for [AFNetworking](http://github.com/AFNetworking/AFNetworking/) that simplifies the process uploading files to [Amazon's S3](http://aws.amazon.com/s3/) service.
 
