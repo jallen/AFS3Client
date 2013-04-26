@@ -26,7 +26,6 @@
 
 #import "AFNetworking.h"
 #import <CommonCrypto/CommonHMAC.h>
-#import <MobileCoreServices/MobileCoreServices.h>
 
 // See http://docs.amazonwebservices.com/AmazonS3/2006-03-01/index.html?RESTAccessPolicy.html for what these mean
 extern NSString *const AFS3AccessPolicyPrivate; // This is the default in S3 when no access policy header is provided
